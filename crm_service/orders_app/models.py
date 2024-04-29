@@ -52,6 +52,14 @@ class DeviceInField(models.Model):
         return f"{self.analyzer} с/н {self.serial_number} в {self.customer}"
     
 
+def status_validator(order_status):
+    if order_status not in ['open', 'closed', 'in progress', 'need info']:
+        raise ValidationError(
+            gettext_lazy('%(order_status)s is wrong order status'),
+            params={'order status': order_status},
+        )
+    
+
 class Order(model.Model):
     """Класс для описания заявки"""
 
